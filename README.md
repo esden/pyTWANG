@@ -22,8 +22,9 @@ I bet it is not even a complete list.
 * [ ] Screensavers
   * [x] Mode 0: Marching green <> orange
   * [x] Mode 1: Random flashes
-  * [ ] Mode 2
+  * [x] Mode 2: Dots in bowl
   * [ ] Mode 3
+  * [ ] Mode 4
 * [ ] Controls
 * [ ] Player
   * [ ] Player attack/shield

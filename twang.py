@@ -50,11 +50,23 @@ def nscale8(color, scaler):
 def hsv_to_rgb(h, s, v):
     color = pygame.Color(255, 0, 0)
     color.hsva = ((h / 256) * 360, (s / 256) * 100, (v / 256) * 100, 100)
-    return color.r, color.g, color.b
+    return int(color.r), int(color.g), int(color.b)
+
+
+def add_rgb(c1, c2):
+    return (c1[0] + c2[0]) % 255, (c1[1] + c2[1]) % 255, (c1[2] + c2[2]) % 255
+
+# these are screensaver Mode 2 consts
+# TODO: refactor, to put the screensaver in a class
+screensaver_dotspeed = 22
+screensaver_dots_in_bowls_count = 3
+screensaver_dot_distance = 65535 / screensaver_dots_in_bowls_count
+screensaver_dot_brightness = 255
 
 
 def screensaver_tick(ledstring, time):
     mode = int(time / 30000) % 5
+    #mode = 2
 
     # print(f"m: {mode}")
     if mode == 0:
@@ -79,8 +91,21 @@ def screensaver_tick(ledstring, time):
                 ledstring[i] = hsv_to_rgb(25, 255, 100)
 
     elif mode == 2:
-        # ...
-        ledstring[0] = (0, 0, 255)
+        # dots in bowl
+        for i in range(len(ledstring)):
+            ledstring[i] = (0, 0, 0)
+
+        for i in range(screensaver_dots_in_bowls_count):
+            mm = (((i * screensaver_dot_distance) + (time % (2 ** 32)) * screensaver_dotspeed) % (2 ** 16)) / (2 ** 15)
+            n = int((((math.sin(mm * math.pi) + 1) / 2) * (len(ledstring) - 5)) + 2)
+            c = mm * 128
+            # print(f"mm {mm} n {n} c {c}")
+            ledstring[n - 2] = add_rgb(ledstring[n - 2], hsv_to_rgb(c, 255, screensaver_dot_brightness / 4))
+            ledstring[n - 1] = add_rgb(ledstring[n - 1], hsv_to_rgb(c, 255, screensaver_dot_brightness / 2))
+            ledstring[n + 0] = add_rgb(ledstring[n + 0], hsv_to_rgb(c, 255, screensaver_dot_brightness))
+            ledstring[n + 1] = add_rgb(ledstring[n + 1], hsv_to_rgb(c, 255, screensaver_dot_brightness / 2))
+            ledstring[n + 2] = add_rgb(ledstring[n + 2], hsv_to_rgb(c, 255, screensaver_dot_brightness / 4))
+
     elif mode == 3:
         # ...
         ledstring[0] = (255, 0, 255)
