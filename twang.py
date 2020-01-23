@@ -1,6 +1,7 @@
 import pygame
 import sys
 import math
+import random
 
 
 class LEDString:
@@ -57,6 +58,7 @@ def screensaver_tick(ledstring, time):
 
     # print(f"m: {mode}")
     if mode == 0:
+        # Marching green <> orange
         for i in range(len(ledstring)):
             ledstring[i] = nscale8(ledstring[i], 250)
 
@@ -68,12 +70,22 @@ def screensaver_tick(ledstring, time):
                 ledstring[i] = hsv_to_rgb(c, 255, 150)
             i += 1
     elif mode == 1:
-        ledstring[0] = (0, 255, 0)
+        # Random flashes
+        for i in range(len(ledstring)):
+            ledstring[i] = nscale8(ledstring[i], 250)
+
+        for i in range(len(ledstring)):
+            if random.randrange(0, 20) == 0:
+                ledstring[i] = hsv_to_rgb(25, 255, 100)
+
     elif mode == 2:
+        # ...
         ledstring[0] = (0, 0, 255)
     elif mode == 3:
+        # ...
         ledstring[0] = (255, 0, 255)
     elif mode == 4:
+        # ...
         ledstring[0] = (255, 255, 0)
     else:
         ledstring[0] = (255, 0, 0)

@@ -20,8 +20,8 @@ I bet it is not even a complete list.
 
 * [x] pygame LED string emulation
 * [ ] Screensavers
-  * [x] Mode 0
-  * [ ] Mode 1
+  * [x] Mode 0: Marching green <> orange
+  * [x] Mode 1: Random flashes
   * [ ] Mode 2
   * [ ] Mode 3
 * [ ] Controls
