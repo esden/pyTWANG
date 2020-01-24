@@ -66,7 +66,7 @@ screensaver_dot_brightness = 255
 
 def screensaver_tick(ledstring, time):
     mode = int(time / 30000) % 5
-    # mode = 3
+    # mode = 4
 
     # print(f"m: {mode}")
     if mode == 0:
@@ -113,18 +113,22 @@ def screensaver_tick(ledstring, time):
             ledstring[i] = nscale8(ledstring[i], 128)
 
         c = time % 800
-        if (c < 240):
+        if c < 240:
             n = int(121 - c / 2)
         else:
             n = 1
 
         for i in range(len(ledstring)):
-            if random.randrange(0,256) <= n:
+            if random.randrange(0, 256) <= n:
                 ledstring[i] = (100, 100, 100)
 
     else:
-        # ...
-        ledstring[0] = (255, 255, 0)
+        # Scroll dots
+        for i in range(len(ledstring)):
+            if ((i + int(time / 100)) % 5) == 0:
+                ledstring[i] = (100, 100, 100)
+            else:
+                ledstring[i] = (0, 0, 0)
 
 
 def main():

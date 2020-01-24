@@ -24,7 +24,7 @@ I bet it is not even a complete list.
   * [x] Mode 1: Random flashes
   * [x] Mode 2: Dots in bowl
   * [x] Mode 3: Sparkles
-  * [ ] Mode 4
+  * [x] Mode 4: Dot scroll
 * [ ] Controls
 * [ ] Player
   * [ ] Player attack/shield
