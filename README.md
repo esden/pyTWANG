@@ -23,7 +23,7 @@ I bet it is not even a complete list.
   * [x] Mode 0: Marching green <> orange
   * [x] Mode 1: Random flashes
   * [x] Mode 2: Dots in bowl
-  * [ ] Mode 3
+  * [x] Mode 3: Sparkles
   * [ ] Mode 4
 * [ ] Controls
 * [ ] Player

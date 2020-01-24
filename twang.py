@@ -66,7 +66,7 @@ screensaver_dot_brightness = 255
 
 def screensaver_tick(ledstring, time):
     mode = int(time / 30000) % 5
-    #mode = 2
+    # mode = 3
 
     # print(f"m: {mode}")
     if mode == 0:
@@ -81,6 +81,7 @@ def screensaver_tick(ledstring, time):
             if i % 10 == n:
                 ledstring[i] = hsv_to_rgb(c, 255, 150)
             i += 1
+
     elif mode == 1:
         # Random flashes
         for i in range(len(ledstring)):
@@ -107,14 +108,23 @@ def screensaver_tick(ledstring, time):
             ledstring[n + 2] = add_rgb(ledstring[n + 2], hsv_to_rgb(c, 255, screensaver_dot_brightness / 4))
 
     elif mode == 3:
-        # ...
-        ledstring[0] = (255, 0, 255)
-    elif mode == 4:
+        # Sparkles
+        for i in range(len(ledstring)):
+            ledstring[i] = nscale8(ledstring[i], 128)
+
+        c = time % 800
+        if (c < 240):
+            n = int(121 - c / 2)
+        else:
+            n = 1
+
+        for i in range(len(ledstring)):
+            if random.randrange(0,256) <= n:
+                ledstring[i] = (100, 100, 100)
+
+    else:
         # ...
         ledstring[0] = (255, 255, 0)
-    else:
-        ledstring[0] = (255, 0, 0)
-        ledstring[1] = (255, 0, 0)
 
 
 def main():
