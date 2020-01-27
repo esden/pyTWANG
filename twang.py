@@ -32,9 +32,32 @@ class LEDString:
             pygame.draw.rect(screen, led, self.work_rect)
             self.work_rect.move_ip(self.size,0)
 
+    def clear(self):
+        for i in range(len(self.leds)):
+            self.leds[i] = (0, 0, 0)
+
     def animate(self):
         self.leds[0][0] += 1
         self.leds[0][0] %= 255
+
+
+class Player:
+
+    def __init__(self, ledstring, direction=1):
+        self.position = 0
+        self.ledstring = ledstring
+        self.direction = direction
+
+    def draw(self):
+        self.ledstring[self.position] = (0, 255, 0)
+
+    def move(self, speed):
+        amount = speed * self.direction
+        self.position += amount
+        if self.position < 0:
+            self.position = 0
+        elif self.position >= len(self.ledstring):
+            self.position = len(self.ledstring) - 1
 
 
 def nscale8(color, scaler):
@@ -140,6 +163,8 @@ def main():
     led_string_length = 144
     led_string = LEDString(led_string_length, color=led_color, size=led_size, margin=led_margin)
     led_string_status = 13
+    player = Player(led_string)
+    player_speed = 0
 
     # pyGame stuff
     pygame.init()
@@ -162,13 +187,23 @@ def main():
             elif event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_q:
                     running = False
+                elif event.key == pygame.K_LEFT:
+                    player_speed = -1
+                elif event.key == pygame.K_RIGHT:
+                    player_speed = 1
+            elif event.type == pygame.KEYUP:
+                if event.key == pygame.K_LEFT or event.key == pygame.K_RIGHT:
+                    player_speed = 0
 
         # Clear screen
         screen.fill((128, 128, 128))
 
         # Advance animations
         # led_string.animate()
-        screensaver_tick(led_string, pygame.time.get_ticks())
+        # screensaver_tick(led_string, pygame.time.get_ticks())
+        led_string.clear()
+        player.draw()
+        player.move(player_speed)
 
         # Render LEDs onto the screen
         led_string.draw(screen)

@@ -26,7 +26,7 @@ I bet it is not even a complete list.
   * [x] Mode 3: Sparkles
   * [x] Mode 4: Dot scroll
 * [ ] Controls
-* [ ] Player
+* [x] Player
   * [ ] Player attack/shield
 * [ ] Enemy
 * [ ] Particle
