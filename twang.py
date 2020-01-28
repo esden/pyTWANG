@@ -24,16 +24,6 @@ class Player:
             self.position = len(self.ledstring) - 1
 
 
-def hsv_to_rgb(h, s, v):
-    color = pygame.Color(255, 0, 0)
-    color.hsva = ((h / 256) * 360, (s / 256) * 100, (v / 256) * 100, 100)
-    return int(color.r), int(color.g), int(color.b)
-
-
-def add_rgb(c1, c2):
-    return (c1[0] + c2[0]) % 255, (c1[1] + c2[1]) % 255, (c1[2] + c2[2]) % 255
-
-
 # these are screensaver Mode 2 consts
 # TODO: refactor, to put the screensaver in a class
 screensaver_dotspeed = 22
@@ -43,8 +33,8 @@ screensaver_dot_brightness = 255
 
 
 def screensaver_tick(ledstring, time):
-    # mode = int(time / 30000) % 5
-    mode = 4
+    mode = int(time / 30000) % 5
+    # mode = 4
 
     # print(f"m: {mode}")
     if mode == 0:
