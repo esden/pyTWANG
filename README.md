@@ -19,7 +19,7 @@ Here is a basic todo list for the 1-1 port of the game.
 I bet it is not even a complete list.
 
 * [x] pygame LED string emulation
-* [ ] Screensavers
+* [x] Screensavers
   * [x] Mode 0: Marching green <> orange
   * [x] Mode 1: Random flashes
   * [x] Mode 2: Dots in bowl
