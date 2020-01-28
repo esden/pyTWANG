@@ -58,12 +58,14 @@ def main():
                 if event.key == pygame.K_q:
                     running = False
                 elif event.key == pygame.K_LEFT:
-                    player_speed = -1
+                    player_speed -= 1
                 elif event.key == pygame.K_RIGHT:
-                    player_speed = 1
+                    player_speed += 1
             elif event.type == pygame.KEYUP:
-                if event.key == pygame.K_LEFT or event.key == pygame.K_RIGHT:
-                    player_speed = 0
+                if event.key == pygame.K_LEFT:
+                    player_speed += 1
+                elif event.key == pygame.K_RIGHT:
+                    player_speed -= 1
 
         # Clear screen
         screen.fill((128, 128, 128))
@@ -79,7 +81,7 @@ def main():
         led_string.draw(screen)
 
         # Draw satusbar information
-        status = font.render("t: {}".format((pygame.time.get_ticks() - starttime) / 1000), True, (0, 0, 0))
+        status = font.render("t: {} s: {}".format((pygame.time.get_ticks() - starttime) // 1000, player_speed), True, (0, 0, 0))
         status_rect = status.get_rect()
         status_rect.topleft = (10, led_size)
         screen.blit(status, status_rect)
