@@ -1,5 +1,6 @@
 import random
 import math
+import LEDString
 
 
 class Screensaver:
@@ -14,7 +15,7 @@ class Screensaver:
         self.ledstring = ledstring
 
     def tick(self, time):
-        mode = int(time / 30000) % 5
+        mode = int(time / 3000) % 5
         # mode = 4
         ledstring = self.ledstring
 
@@ -29,7 +30,7 @@ class Screensaver:
             # print(f"t: {time / 5000.00} c: {c}")
             for i in range(len(ledstring)):
                 if i % 10 == n:
-                    result = ledstring[i].hsv_rainbow((c, 255, 150))
+                    result = ledstring[i].nhsv_rainbow(c, 255, 150)
             # print(result)
 
         elif mode == 1:
@@ -39,7 +40,7 @@ class Screensaver:
 
             for i in range(len(ledstring)):
                 if random.randrange(0, 20) == 0:
-                    ledstring[i].hsv_rainbow((25, 255, 100))
+                    ledstring[i].nhsv_rainbow(25, 255, 100)
 
         elif mode == 2:
             # dots in bowl
@@ -50,11 +51,11 @@ class Screensaver:
                 n = int((((math.sin(mm * math.pi) + 1) / 2) * (len(ledstring) - 5)) + 2)
                 c = int(mm * 128)
                 # print(f"mm {mm} n {n} c {c}")
-                ledstring[n - 2].hsv_rainbow((c, 255, Screensaver.dot_brightness // 4))
-                ledstring[n - 1].hsv_rainbow((c, 255, Screensaver.dot_brightness // 2))
-                ledstring[n + 0].hsv_rainbow((c, 255, Screensaver.dot_brightness))
-                ledstring[n + 1].hsv_rainbow((c, 255, Screensaver.dot_brightness // 2))
-                ledstring[n + 2].hsv_rainbow((c, 255, Screensaver.dot_brightness // 4))
+                ledstring[n - 2] += LEDString.hsv_rainbow(c, 255, Screensaver.dot_brightness // 4)
+                ledstring[n - 1] += LEDString.hsv_rainbow(c, 255, Screensaver.dot_brightness // 2)
+                ledstring[n + 0] += LEDString.hsv_rainbow(c, 255, Screensaver.dot_brightness)
+                ledstring[n + 1] += LEDString.hsv_rainbow(c, 255, Screensaver.dot_brightness // 2)
+                ledstring[n + 2] += LEDString.hsv_rainbow(c, 255, Screensaver.dot_brightness // 4)
 
         elif mode == 3:
             # Sparkles
