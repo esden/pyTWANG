@@ -27,7 +27,7 @@ I bet it is not even a complete list.
   * [x] Mode 4: Dot scroll
 * [ ] Controls
 * [x] Player
-  * [ ] Player attack/shield
+  * [x] Player attack/shield
 * [ ] Enemy
 * [ ] Particle
 * [ ] Spawner
