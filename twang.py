@@ -94,6 +94,7 @@ def main():
         player.tick(time)
         enemy.tick(time)
         enemy.collide()
+        player.collide()
         player.draw(time)
         enemy.draw()
 

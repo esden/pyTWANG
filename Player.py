@@ -69,6 +69,17 @@ class Player:
         elif self.position >= len(self.ledstring):
             self.position = len(self.ledstring) - 1
 
+    def collide(self):
+        for enemy in self.world["enemies"]:
+            if not enemy.alive:
+                continue
+            if ((enemy.player_side == 1) and (self.position >= enemy.position)) or \
+               ((enemy.player_side == -1) and (self.position <= enemy.position)):
+                self.die()
+
+    def die(self):
+        self.position = 0
+
     def attack(self, time):
         self.attack_millis = time
         self.attacking = True
