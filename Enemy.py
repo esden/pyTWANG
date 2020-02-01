@@ -26,13 +26,19 @@ import math
 
 class Enemy:
 
-    def __init__(self, ledstring, position, speed, wobble):
+    def __init__(self, ledstring, world, position=0, speed=0, wobble=0):
         self.ledstring = ledstring
+        self.world = world
         self.position = position
         self.origin = position
         self.speed = speed
         self.wobble = wobble
-        self.alive = True
+        self.alive = False
+        self.player_side = 0
+        if "enemies" not in world:
+            world["enemies"] = [self]
+        else:
+            world["enemies"].append(self)
 
     def draw(self):
         if self.alive:
@@ -49,13 +55,24 @@ class Enemy:
             if self.position >= len(self.ledstring) or self.position < 0:
                 self.alive = False
 
-    def collide(self, world):
+    def collide(self):
         if not self.alive:
             return
-        if world["player"].attacking:
-            player = world["player"]
+        if self.world["player"].attacking:
+            player = self.world["player"]
             p_pos = player.position
             p_range = player.attack_width
             e_pos = self.position
             if e_pos > (p_pos - (p_range // 2)) and e_pos < (p_pos + (p_range // 2)):
                 self.alive = False
+
+    def spawn(self, position, speed, wobble=0):
+        self.alive = True
+        self.position = position
+        self.origin = position
+        self.speed = speed
+        self.wobble = wobble
+        if position > self.world["player"].position:
+            self.player_side = 1
+        else:
+            self.player_side = -1

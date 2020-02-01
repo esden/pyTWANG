@@ -40,10 +40,14 @@ def main():
     led_string = LEDString.LEDString(led_string_length, color=led_color, size=led_size, margin=led_margin)
     led_string_status = 13
     screensaver = Screensaver.Screensaver(led_string)
-    player = Player.Player(led_string)
-    enemy = Enemy.Enemy(led_string, 100, -10, 20)
+
+    world = {}
+    player = Player.Player(led_string, world)
+    enemy = Enemy.Enemy(led_string, world)
+
     player_speed = 0
-    world = {"player": player, "enemy": enemy}
+
+    enemy.spawn(100, -4, 20)
 
     # pyGame stuff
     pygame.init()
@@ -89,7 +93,7 @@ def main():
         player.speed = player_speed
         player.tick(time)
         enemy.tick(time)
-        enemy.collide(world)
+        enemy.collide()
         player.draw(time)
         enemy.draw()
 

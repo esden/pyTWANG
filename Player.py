@@ -25,7 +25,7 @@ import utils
 
 class Player:
 
-    def __init__(self, ledstring, direction=1, attack_width=8, attack_duration=500):
+    def __init__(self, ledstring, world, direction=1, attack_width=8, attack_duration=500):
         self.position = 0
         self.ledstring = ledstring
         self.direction = direction
@@ -34,6 +34,8 @@ class Player:
         self.attack_millis = 0
         self.attack_duration = attack_duration
         self.speed = 0
+        self.world = world
+        world["player"] = self
 
     def draw(self, time):
         if not self.attacking:
