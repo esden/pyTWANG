@@ -22,6 +22,7 @@
 
 import utils
 
+
 class Player:
 
     def __init__(self, ledstring, direction=1, attack_width=8, attack_duration=500):
@@ -42,7 +43,7 @@ class Player:
 
     def __draw_attack(self, time):
         n = utils.range_map(time - self.attack_millis, 0, self.attack_duration, 100, 5)
-        for i in range(self.position - (self.attack_width // 2) + 1, self.position + (self.attack_width //2) - 1):
+        for i in range(self.position - (self.attack_width // 2) + 1, self.position + (self.attack_width // 2) - 1):
             self.ledstring[i].rgb((0, 0, n))
         if n > 90:
             n = 255
