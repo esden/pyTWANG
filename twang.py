@@ -56,6 +56,17 @@ class Enemy:
             if self.position >= len(self.ledstring) or self.position < 0:
                 self.alive = False
 
+    def collide(self, world):
+        if not self.alive:
+            return
+        if world["player"].attacking:
+            player = world["player"]
+            p_pos = player.position
+            p_range = player.attack_width
+            e_pos = self.position
+            if e_pos > (p_pos - (p_range // 2)) and e_pos < (p_pos + (p_range // 2)):
+                self.alive = False
+
 
 def main():
 
@@ -70,6 +81,7 @@ def main():
     player = Player.Player(led_string)
     enemy = Enemy(led_string, 100, -10, 20)
     player_speed = 0
+    world = {"player": player, "enemy": enemy}
 
     # pyGame stuff
     pygame.init()
@@ -115,6 +127,7 @@ def main():
         player.speed = player_speed
         player.tick(time)
         enemy.tick(time)
+        enemy.collide(world)
         player.draw(time)
         enemy.draw()
 
