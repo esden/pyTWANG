@@ -27,45 +27,7 @@ import sys
 import LEDString
 import Screensaver
 import Player
-import utils
-import math
-
-
-class Enemy:
-
-    def __init__(self, ledstring, position, speed, wobble):
-        self.ledstring = ledstring
-        self.position = position
-        self.origin = position
-        self.speed = speed
-        self.wobble = wobble
-        self.alive = True
-
-    def draw(self):
-        if self.alive:
-            draw_pos = utils.range_constrain(self.position, 0, len(self.ledstring) - 1)
-            self.ledstring[draw_pos].rgb((255, 0, 0))
-
-    def tick(self, time):
-        if not self.alive:
-            return
-        if self.wobble:
-            self.position = self.origin + int(math.sin((time / 3000.0) * self.speed) * self.wobble)
-        else:
-            self.position += self.speed
-            if self.position >= len(self.ledstring) or self.position < 0:
-                self.alive = False
-
-    def collide(self, world):
-        if not self.alive:
-            return
-        if world["player"].attacking:
-            player = world["player"]
-            p_pos = player.position
-            p_range = player.attack_width
-            e_pos = self.position
-            if e_pos > (p_pos - (p_range // 2)) and e_pos < (p_pos + (p_range // 2)):
-                self.alive = False
+import Enemy
 
 
 def main():
@@ -79,7 +41,7 @@ def main():
     led_string_status = 13
     screensaver = Screensaver.Screensaver(led_string)
     player = Player.Player(led_string)
-    enemy = Enemy(led_string, 100, -10, 20)
+    enemy = Enemy.Enemy(led_string, 100, -10, 20)
     player_speed = 0
     world = {"player": player, "enemy": enemy}
 
